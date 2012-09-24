@@ -8,9 +8,9 @@ class Hiera
 
     def [](key)
       if key == "calling_class"
-        ans = @real.resource.name.to_s.downcase
+        ans = @real.scope_path.find  {|c| c.source.type == :hostclass }.source.name
       elsif key == "calling_module"
-        ans = @real.resource.name.to_s.downcase.split("::").first
+        ans = @real.source.module_name
       else
         ans = @real.lookupvar(key)
       end
